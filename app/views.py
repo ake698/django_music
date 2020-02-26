@@ -19,6 +19,8 @@ def getUser(request):
     user = UserManager.objects.get(username=username)
     return user
 
+
+
 #首页
 def index(request):
     songs = Song.objects.all()
@@ -44,7 +46,7 @@ def player(request,id):
     return render(request,'player.html',{"cates":cates,"song":song,"songs":songs})
 
 
-#歌曲喜欢
+#歌曲收藏
 def like(request):
     result = {
         "code": "400",
@@ -78,6 +80,22 @@ def like(request):
     result['data'] = like
     return HttpResponse(json.dumps(result), content_type="application/json")
 
+
+def comment(request):
+    result = {
+        "code": "400",
+        "msg": "错误！",
+    }
+    if request.method == "POST":
+        id = request.POST.get("id")
+        content = request.POST['content']
+        user = getUser(request)
+        song = Song.objects.get(id=int(id))
+        #创建评论
+        Comment.objects.create(song=song,user=request,content=content)
+        result['code'] = "200"
+        result['msg'] = "操作成功！"
+    return HttpResponse(json.dumps(result), content_type="application/json")
 
 #个人中心
 def person(request):

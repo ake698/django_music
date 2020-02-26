@@ -66,6 +66,7 @@ class Like(models.Model):
 
 class Comment(models.Model):
     id = models.AutoField(primary_key=True, verbose_name="ID")
+    song = models.ForeignKey(Song, on_delete=models.CASCADE,verbose_name="歌曲")
     user = models.ForeignKey(UserManager, on_delete=models.CASCADE,related_name="user",verbose_name="评论用户")
     content = models.TextField(verbose_name="评论")
     to_user = models.ForeignKey(UserManager, on_delete=models.CASCADE,related_name="to_user",null=True,blank=True,verbose_name="回复用户")

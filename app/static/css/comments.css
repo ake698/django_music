@@ -74,17 +74,17 @@
     width: 46px;
     height: 25px;
     background-position: -84px -64px;
-    color: black;
+    color: white;
     text-align: center;
 
     padding: 0 11px;
-    background: #02bafa;
-    border: 1px #26bbdb solid;
+    background: #9DC45F;
+    /* border: 1px #26bbdb solid;*/
     border-radius: 3px;
     /*color: #fff;*/
     display: inline-block;
     text-decoration: none;
-    font-size: 18px;
+    font-size: 16px;
     outline: none;
 }
 
