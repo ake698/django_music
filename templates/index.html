@@ -1,0 +1,169 @@
+  <!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>静听网 </title>
+  <link rel="icon" href="favicon.ico" mce_href="favicon.ico" type="image/x-icon">
+  <link rel="shortcut icon" href="favicon.ico" mce_href="http://jt.hapboy.xyz/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/static/css/reset.css">
+  <link rel="stylesheet" href="/static/css/common.css">
+  <link rel="stylesheet" href="/static/css/slider.css">
+  <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+</head>
+<body>
+<!-- 导航栏 -->
+<header>
+  <div class="container">
+    <div class="navbar-header">
+      <a href="" class="navbar-brand">
+        <img src="/static/images/logo.png" alt="">
+      </a>
+    </div>
+    <nav>
+      <ul class="nav navbar-nav navbar-link">
+      <li class="active"><a href="/index">首页</a></li>
+          {% for i in cates %}
+                <li><a href="/category/{{ i.id }}">{{ i.category }}</a></li>
+          {% endfor %}
+
+      </ul>
+      <ul class="nav navbar-nav navbar-right navbar-sm">
+        {% include 'module/search.html' %}
+          {% if request.session.active %}
+        <li><a href="/person/">{{ request.session.active }}</a></li>
+          {% else %}
+          <li><a href="/login/">注册 / 登录</a></li>
+          {% endif %}
+      </ul>
+    </nav>
+  </div>
+</header>
+<!-- 轮播图 -->
+<div class="container-sm slider-wrap">
+  <div class="slider">
+    <div class="slider-item-list"></div>
+    <div class="slider-dots">
+      <div class="slider-dots-wrap"></div>
+    </div>
+    <div class="slider-arrows">
+      <div class="slider-arrows-wrap">
+        <span class="slider-arrow slider-arrow-left" onclick="HBSlider.turn(-1)"></span>
+        <span class="slider-arrow slider-arrow-right" onclick="HBSlider.turn(1)"></span>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- 主内容区域 -->
+<div class="container-sm box">
+  <!-- 主内容 -->
+  <div class="main">
+    <div class="main-wrap">
+      <div class="content-box">
+        <!-- 歌曲展示 -->
+        <div class="hot-recommand">
+          <div class="content-header">
+            <h2><i class="fa fa-music red"></i>热门歌曲</h2>
+{#            <div class="tab">#}
+{#              <a href="category/piano">钢琴</a>#}
+{#              <span class="line">|</span>#}
+{#              <a href="category/guitar">吉他</a>#}
+{#              <span class="line">|</span>#}
+{#              <a href="category/cartoon">动漫</a>#}
+{#              <span class="line">|</span>#}
+{#              <a href="category/elect">电子</a>#}
+{#            </div>#}
+            <!--<span class="more"><a href="#">更多</a></span>-->
+          </div>
+          <ul class="music-list clearfix">
+              {% for i in comment_songs %}
+            <li>
+              <div class="u-cover">
+                <img src="/media/{{ i.img }}">
+                <a title="{{i.title}}" href="/player/{{ i.id }}/" target="_blank" class="msk"  ></a>
+              </div>
+              <p class="dec">
+                <a title="{{i.title}}" href="/player/{{ i.id }}/"target="_blank">{{i.title}}</a>
+              </p>
+              <div class="author">{{i.author}}</div>
+            </li>
+                {% endfor %}
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- 侧边栏 -->
+  <div class="sidebar" style="min-height: 1094px">
+    <div class="right-module">
+      <h4>最新歌曲</h4>
+      <ul class="new-artist-songs">
+          {% for i in new_songs %}
+        <li class="artist-song">
+          <div class="avatar">
+            <img src="/media/{{ i.img }}">
+          </div>
+          <div class="info">
+            <h3>{{i.title}}</h3>
+            <p>{{ i.author }} / <span>{{i.count}}</span>次喜欢</p>
+          </div>
+          <a href="/player/{{ i.id }}/" title="{{i.title}}" class="cover-link"></a>
+        </li>
+            {% endfor %}
+      </ul>
+    </div>
+
+  </div>
+</div>
+<!-- 底部版权 -->
+<footer  style="text-align: center">
+  <div class="container">
+    <div class="copyright">
+      <p>Copyright © <span class="update-year">2016</span> HaPBoy - All Rights Reserved</p>
+    </div>
+  </div>
+</footer>
+<!-- JS 脚本 -->
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/HBSlider.js"></script>
+<script src="/static/js/common.js"></script>
+<script>
+  // 轮播图数据
+  var sliderData = [
+    {
+      title: '晴れ 时どき 雪',
+      pic: '/static/images/slider/01.png',
+      url: '#'
+    },
+    {
+      title: 'Flower Dance',
+      pic: '/static/images/slider/02.jpg',
+      url: '#'
+    },
+    {
+      title: 'A Little Story - Valentin',
+      pic: '/static/images/slider/03.jpg',
+      url: '#'
+    },
+    {
+      title: '桜花抄 - 天門',
+      pic: '/static/images/slider/04.jpg',
+      url: '#'
+    }
+  ];
+
+  $(function () {
+    HBSlider.setConfig({
+      autoPlay: true,
+      delay: 5
+    });
+    HBSlider.setItems(sliderData);
+    HBSlider.init();
+    HBSlider.play();
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>个人中心 - 静听网 </title>
+{#      <link rel="stylesheet" href="/static/css/bootstrap.min.css">#}
+  <link rel="stylesheet" href="/static/css/reset.css">
+  <link rel="stylesheet" href="/static/css/common.css">
+  <link rel="stylesheet" href="/static/css/category.css">
+  <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/static/css/userinfo.css">
+
+</head>
+<body>
+<header>
+  <div class="container">
+    <div class="navbar-header">
+      <a href="" class="navbar-brand">
+        <img src="/static/images/logo.png" alt="">
+      </a>
+    </div>
+    <nav>
+      <ul class="nav navbar-nav navbar-link">
+        <li><a href="/index">首页</a></li>
+        {% for i in cates %}
+                <li><a href="/category/{{ i.id }}">{{ i.category }}</a></li>
+          {% endfor %}
+      </ul>
+      <ul class="nav navbar-nav navbar-right navbar-sm">
+        {% include 'module/search.html' %}
+                  {% if request.session.active %}
+        <li class="active"><a  href="/person/">{{ request.session.active }}</a></li>
+          {% else %}
+          <li>
+
+              <a href="/login/">注册 / 登录</a></li>
+          {% endif %}
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="container-sm category-header-wrap">
+
+    <div class="headimg">
+<img src="/media/{{ user.img }}">
+    </div>
+
+      <div class="userinfo">
+            <div class="username">
+                <p style="font-size: 22px">{{user.nickname}}</p>
+                <p>账号：{{ user.username }}</p>
+                <a href="/modify/">修改个人资料</a>
+            </div>
+          <hr>
+          <div class="userdes">
+              <p style="font-size: 18px;color: #5e5e5e">{{user.desc}}</p>
+          </div>
+      </div>
+
+</div>
+<div class="container-sm box">
+  <div class="main">
+    <div class="main-wrap">
+      <div class="content-box">
+        <div class="piano-list">
+          <div class="content-header">
+            <h2><i class="fa fa-music red"></i>我的收藏</h2>
+          </div>
+          <ul class="music-list clearfix">
+              {% for i in likes %}
+            <li>
+              <div class="u-cover">
+                <img src="/media/{{i.song.img}}">
+                <a title="{{i.song.title}}" href="/player/{{ i.song.id }}/" class="msk"></a>
+              </div>
+              <p class="dec">
+                <a title="{{i.song.title}}" href="/player/{{ i.song.id }}/">{{i.song.title}}</a>
+              </p>
+              <div class="author">{{i.song.author}}</div>
+            </li>
+                {% endfor %}
+
+          </ul>
+        </div>
+      </div>
+    </div>
+
+      <!--评论收藏-->
+      <div class="main-wrap">
+      <div class="content-box">
+        <div class="piano-list">
+          <div class="content-header">
+            <h2><i class="fa fa-music red"></i>收藏评论</h2>
+          </div>
+         <!--list-->
+            <div class="row">
+            <div style="width: 40%" class="category-music-list">
+              <div class="category-header">
+                收藏的评论
+              </div>
+              <ul>
+                <li class="music-list-item">
+                  <div class="title">
+                    <div class="title_wrap">
+                      <span class="rank">1</span>
+                      <a href="./music/22712173.html" title="Refrain">Refrain</a>
+                    </div>
+                  </div>
+                  <div class="info">
+                    <span class="date">12-26</span>
+                    <span class="avatar"><img src="./storage/avatar/18.jpg"></span>
+                  </div>
+                </li>
+                <li class="music-list-item">
+                  <div class="title">
+                    <div class="title_wrap">
+                      <span class="rank">2</span>
+                      <a href="./music/586299.html" title="風の住む街">風の住む街</a>
+                    </div>
+                  </div>
+                  <div class="info">
+                    <span class="date">12-20</span>
+                    <span class="avatar"><img src="./storage/avatar/10.jpg"></span>
+                  </div>
+                </li>
+                <li class="music-list-item">
+                  <div class="title">
+                    <div class="title_wrap">
+                      <span class="rank">3</span>
+                      <a href="./music/357126.html" title="Tassel">Tassel</a>
+                    </div>
+                  </div>
+                  <div class="info">
+                    <span class="date">12-25</span>
+                    <span class="avatar"><img src="./storage/avatar/25.jpg"></span>
+                  </div>
+                </li>
+                <li class="music-list-item">
+                  <div class="title">
+                    <div class="title_wrap">
+                      <span class="rank">4</span>
+                      <a href="./music/139730.html" title="安静的午后">安静的午后</a>
+                    </div>
+                  </div>
+                  <div class="info">
+                    <span class="date">11-17</span>
+                    <span class="avatar"><img src="./storage/avatar/5.jpg"></span>
+                  </div>
+                </li>
+                <li class="music-list-item">
+                  <div class="title">
+                    <div class="title_wrap">
+                      <span class="rank">5</span>
+                      <a href="./music/139774.html" title="The truth that you leave">The truth that you leave</a>
+                    </div>
+                  </div>
+                  <div class="info">
+                    <span class="date">12-13</span>
+                    <span class="avatar"><img src="./storage/avatar/24.jpg"></span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div style="width: 40%;margin-left: 5%" class="category-music-list">
+              <div class="category-header">
+                我的评论
+              </div>
+              <ul>
+                <li class="music-list-item">
+                  <div class="title">
+                    <div class="title_wrap">
+                      <span class="rank">1</span>
+                      <a href="./music/22712173.html" title="Refrain">Refrain</a>
+                    </div>
+                  </div>
+                  <div class="info">
+                    <span class="date">12-26</span>
+                    <span class="avatar"><img src="./storage/avatar/18.jpg"></span>
+                  </div>
+                </li>
+                <li class="music-list-item">
+                  <div class="title">
+                    <div class="title_wrap">
+                      <span class="rank">2</span>
+                      <a href="./music/586299.html" title="風の住む街">風の住む街</a>
+                    </div>
+                  </div>
+                  <div class="info">
+                    <span class="date">12-20</span>
+                    <span class="avatar"><img src="./storage/avatar/10.jpg"></span>
+                  </div>
+                </li>
+                <li class="music-list-item">
+                  <div class="title">
+                    <div class="title_wrap">
+                      <span class="rank">3</span>
+                      <a href="./music/357126.html" title="Tassel">Tassel</a>
+                    </div>
+                  </div>
+                  <div class="info">
+                    <span class="date">12-25</span>
+                    <span class="avatar"><img src="./storage/avatar/25.jpg"></span>
+                  </div>
+                </li>
+                <li class="music-list-item">
+                  <div class="title">
+                    <div class="title_wrap">
+                      <span class="rank">4</span>
+                      <a href="./music/139730.html" title="安静的午后">安静的午后</a>
+                    </div>
+                  </div>
+                  <div class="info">
+                    <span class="date">11-17</span>
+                    <span class="avatar"><img src="./storage/avatar/5.jpg"></span>
+                  </div>
+                </li>
+                <li class="music-list-item">
+                  <div class="title">
+                    <div class="title_wrap">
+                      <span class="rank">5</span>
+                      <a href="./music/139774.html" title="The truth that you leave">The truth that you leave</a>
+                    </div>
+                  </div>
+                  <div class="info">
+                    <span class="date">12-13</span>
+                    <span class="avatar"><img src="./storage/avatar/24.jpg"></span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer style="text-align: center">
+  <div class="container">
+    <div class="copyright">
+      <p>Copyright © <span class="update-year">2016</span> HaPBoy - All Rights Reserved</p>
+    </div>
+  </div>
+</footer>
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/common.js"></script>
+</body>
+</html>

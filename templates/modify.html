@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>电子 - 静听网 </title>
+  <link rel="stylesheet" href="/static/css/reset.css">
+  <link rel="stylesheet" href="/static/css/common.css">
+  <link rel="stylesheet" href="/static/css/category.css">
+  <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/static/css/userinfo.css">
+
+</head>
+<body>
+<header>
+  <div class="container">
+    <div class="navbar-header">
+      <a href="" class="navbar-brand">
+        <img src="/static/images/logo.png" alt="">
+      </a>
+    </div>
+    <nav>
+      <ul class="nav navbar-nav navbar-link">
+        <li><a href="/index">首页</a></li>
+        {% for i in cates %}
+                <li><a href="/category/{{ i.id }}">{{ i.category }}</a></li>
+          {% endfor %}
+      </ul>
+      <ul class="nav navbar-nav navbar-right navbar-sm">
+        {% include 'module/search.html' %}
+        {% if request.session.active %}
+        <li class="active"><a href="/person/">{{ request.session.active }}</a></li>
+          {% else %}
+          <li>
+
+              <a href="/login/">注册 / 登录</a></li>
+          {% endif %}
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="container-sm category-header-wrap" style="height: 400px">
+        <div class="headimg">
+<img id="avatar_img" src="/media/{{ user.img }}">
+    </div>
+<div class="userinfo">
+<form  method="#" class="smart-green" οnsubmit="return false">
+    <label><span>个人昵称 :</span>
+        <input id="title" type="text" name="title" value="{{ user.nickname }}" />
+        <div class="error-msg"></div>
+    </label>
+   <!-- <label><span>邮箱 :</span>
+        <input id="email" type="email" value="" name="email" /> &nbsp; &nbsp; &nbsp; &nbsp;
+        <div class="error-msg"></div></label>-->
+
+    <label><span>个人简介 :</span>
+        <textarea id="description" name="description">{{ user.desc }}</textarea>
+        <div class="error-msg"></div> &nbsp; &nbsp; </label>
+    <div class="success-msg"></div>
+    <label><span>头像 :</span>
+        <input type="file" value="" name="avatar" id="avatar" style="margin-left: 10%" />
+        <input id="userimg" type="hidden" value="{{ user.img }}">
+        <div class="error-msg"></div></label>
+    <br><br>
+    <label><span>&nbsp;</span><button id="form_btn" class="button" >确定</button></label>
+</form>
+</div>
+
+</div>
+<footer style="text-align: center">
+  <div class="container">
+    <div class="copyright">
+      <p>Copyright © <span class="update-year">2016</span> HaPBoy - All Rights Reserved</p>
+    </div>
+  </div>
+</footer>
+
+<script src="/static/js/jquery.min.js/"></script>
+<script src="/static/js/common.js/"></script>
+<script>
+    // 头像预览
+$("#avatar").change(function () {
+    //拿到文件数据
+    var file =     $(this)[0];
+    var choose_file = $(this)[0].files[0];
+    //截取图片名称小数点后的字符串
+    var ftype=choose_file.name.substring(choose_file.name.lastIndexOf(".")+1);
+    //校验格式是否是图片类型
+    if(ftype=="jpg" || ftype=="png" || ftype=="jpeg" || ftype == "JPG"){
+        //限制大小，照片大小不能超过1M
+        var size = choose_file.size / 1024 / 1024;
+        if (size > 1) {
+            alert("头像不能大于1M");
+            return false;
+        }
+        //上传图片并显示
+        imgurl = uploadImg(file);
+
+    }else{
+        alert("头像格式不对，请重新选择！");
+        return false;
+    }
+});
+
+function uploadImg(file) {
+    var formData = new FormData();
+    formData.append("files",file.files[0]);
+    $.ajax({
+        url:"/imgupload/",
+        dataType:'json',
+        type:'POST',
+        contentType: false,        // 告诉jQuery不要去设置Content-Type请求头
+        processData: false,        // 告诉jQuery不要去处理发送的数据
+        data:formData,
+        success: function(data){
+            console.log(data);
+            if (data.code == '200') {
+                img = data.msg;
+                imgurl =  "/media/"+img;
+                $("#avatar_img").attr("src",imgurl);
+                $("#userimg").val(img);
+            }else{
+                alert(data.msg);
+            }
+        },
+    })
+}
+
+$("#form_btn").click(function () {
+
+    var title = $("#title").val();
+    var description = $("#description").val();
+    var userimg = $("#userimg").val();
+    if(title != "" && description != "" && userimg != ""){
+        $.ajax({
+            url:"/modify/",
+            dataType:'json',
+            type: "post",
+            data:{"title":title,"description":description,"userimg":userimg},
+            success:function (data) {
+                alert(data.msg);
+                window.location.href = "/person/"
+            }
+        })
+    }else{
+        alert("请输入完整的个人信息！")
+    }
+
+})
+</script>
+</body>
+</html>

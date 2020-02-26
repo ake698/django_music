@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>{{song.title}} - {{song.author}} - 静听网 </title>
+  <link rel="stylesheet" href="/static/css/reset.css">
+  <link rel="stylesheet" href="/static/css/common.css">
+  <link rel="stylesheet" href="/static/css/music.css">
+  <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/static/css/comments.css">
+</head>
+<body>
+{% include 'header.html' %}
+<div class="container-sm player-wrap">
+  <div id="music-player" class="aplayer"></div>
+</div>
+<div class="container-sm box">
+  <div class="main">
+    <div class="sidebar">
+    <div class="right-module">
+      <h4>推荐歌曲</h4>
+      <ul class="new-artist-songs">
+        {% for i in songs %}
+        <li class="artist-song">
+          <div class="avatar">
+            <img src="/media/{{ i.img }}">
+          </div>
+          <div class="info">
+            <h3>{{i.title}}</h3>
+            <p>{{i.author}}  / <span>{{i.count}}</span>次喜欢</p>
+          </div>
+          <a href="/player/{{ i.id }}/" title="{{i.title}}" class="cover-link"></a>
+        </li>
+          {% endfor %}
+      </ul>
+    </div>
+
+  </div>
+    <div class="main-wrap">
+      <div class="content-box article">
+        <div class="title">
+          <h2>{{song.title}} - {{song.author}}</h2>
+            <p class="like" title="点击收藏">&#10084;</p>
+          <div class="info">
+            <span class="author">{{song.author}}</span> / <span class="date">2016-11-17</span>
+          </div>
+        </div>
+        <div class="content">
+          <p>
+            <img src="/media/{{song.img}}" style="width: 90%">
+          </p>
+            <br><br><br><br><br><br><br><br><br>
+            <!---comments-->
+            <div class="n-cmt" id="comment-box" data-tid="R_SO_4_482988618" data-count="0"><div id="auto-id-nCTMftNpfkDXppq7">
+                <div class="u-title u-title-1">
+                <h3><span class="f-ff2">评论</span></h3><span class="sub s-fc3">共<span class="j-flag">563</span>条评论</span>
+                </div>
+                <div class="m-cmmt">
+                <div class="iptarea">
+                <div class="head"><img src="http://p4.music.126.net/pQ1RnmXMyXQ-4k9V1zzJpg==/18713687906524684.jpg?param=50y50"></div>
+                <div class="j-flag"><div><div class="m-cmmtipt f-cb f-pr"><div class="u-txtwrap holder-parent f-pr" style="display: block;"><textarea style="height: 110px" class="u-txt area j-flag" data-type="0" placeholder="评论" id="auto-id-O7fvDTxcZeJHW4WE"></textarea></div>
+                    <div class="btns f-cb f-pr">
+                        <i class="icn u-icn u-icn-36 j-flag" id="auto-id-pw93pDKhR43MDPCF"></i>
+                        <i class="icn u-icn u-icn-41 j-flag" id="auto-id-K9hsDCGDIztEMLIW"></i>
+                        <a href="javascript:void(0)" class="btn u-btn u-btn-1 j-flag" id="auto-id-luCbX8PiFVJ9uIfk">评论</a>
+                    </div>
+                </div>
+                </div></div>
+                </div>
+                <div class="cmmts j-flag" id="auto-id-dsPqEWynz3cFChWS">
+                    <h3 class="u-hd4">精彩评论</h3>
+                    <br>
+
+                    <div id="31702909981582518015504" class="itm" data-id="3170290998">
+                        <div class="head">
+                        <a href="/user/home?id=2132649468">
+                            <img src="https://p2.music.126.net/oeAdaqTqdYzBXEMKXBVuMw==/109951164665096093.jpg?param=50y50"></a>
+                    </div>
+                        <div class="cntwrap">
+                            <div class="">
+                                <!--自身内容-->
+                                <div class="cnt f-brk"><a href="/user/home?id=2132649468" class="s-fc7">小李没烦恼ovo</a>
+                                    ：lre20岁一定会学建筑的</div></div>
+                            <!--原评论-->
+                            <div class="que f-brk f-pr s-fc3">
+                                <span class="darr">
+                                </span>
+                                <a class="s-fc7" href="/user/home?id=122377914">Jean菲菲<sup class="icn u-icn2 u-icn2-music2"></sup></a>
+                                ：20多岁，没脸提懵懂的无知，也没力去夸下海口吹牛逼。
+                            </div>
+                            <div class="rp">
+                            <div class="time s-fc4">刚刚</div>
+                                <div class="action">
+                                    <a href="javascript:void(0)" class="s-fc3" data-id="3170290998" data-type="reply">收藏</a>
+                                    <span class="sep">|</span>
+                                    <a href="javascript:void(0)" class="s-fc3" data-id="3170290998" data-type="reply">回复</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                </div>
+            </div>
+            <!---comments end-->
+        </div>
+          <!--end-->
+      </div>
+    </div>
+  </div>
+      <footer style="text-align: center">
+          <div class="container">
+            <div class="copyright">
+              <p>Copyright © <span class="update-year">2016</span> HaPBoy - All Rights Reserved</p>
+            </div>
+          </div>
+    </footer>
+</div>
+</div>
+</body>
+<script src="http://cdn.bootcss.com/aplayer/1.5.8/APlayer.min.js"></script>
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/common.js"></script>
+<script>
+  var ap = new APlayer({
+    element: document.getElementById('music-player'), // Optional, player element
+    narrow: false,                                    // Optional, narrow style
+    autoplay: false,                                   // Optional, autoplay song(s), not supported by mobile browsers
+    showlrc: 0,                                       // Optional, show lrc, can be 0, 1, 2, see: ###With lrc
+    mutex: true,                                      // Optional, pause other players when this player playing
+    theme: '#B72712',                                 // Optional, theme color, default: #b7daff
+    mode: 'circulation',                              // Optional, play mode, `random` `single` `circulation`(loop) `order`(no loop), default: `circulation`
+    preload: 'metadata',                              // Optional, the way to load music, can be 'none' 'metadata' 'auto', default: 'auto'
+    listmaxheight: '513px',                           // Optional, max height of play list
+    music: {                                          // Required, music info
+      title: '{{song.title}}',                                 // Required, music title
+      author: '{{ song.author }}',                          // Required, music author
+      url: '/media/{{song.file}}',  // Required, music url
+      pic: '/media/{{song.img}}'  // Optional, music picture
+
+        //http://music.163.com/song/media/outer/url?id=歌曲id.mp3
+    }
+  });
+
+$.ajax({
+    url:"/like/?id={{ song.id }}",
+    type:"get",
+    success:function (data) {
+        if(data.code == "200"){
+            if(Number(data.data) > 0){
+                console.log("xihuan");
+                $(".like").addClass("cs")
+            }
+        }
+
+        console.log("unlike")
+    }
+});
+
+$(".like").click(function () {
+    var flag = $(this).hasClass('cs');
+    if(flag){
+        console.log("取消收藏!");
+        likeSong("unlike")
+    }else{
+        console.log("成功收藏！");
+        likeSong("like")
+    }
+    $(this).toggleClass('cs');
+});
+
+function likeSong(flag){
+    var id = {{ song.id }}
+    $.ajax({
+        url:"/like/",
+        type:"post",
+        data:{id:id,flag:flag},
+    })
+}
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<header>
+  <div class="container">
+    <div class="navbar-header">
+      <a href="" class="navbar-brand">
+        <img src="/static/images/logo.png" alt="">
+      </a>
+    </div>
+    <nav>
+      <ul class="nav navbar-nav navbar-link">
+      <li class="active"><a href="/index">首页</a></li>
+          {% for i in cates %}
+                <li><a href="/category/{{ i.id }}">{{ i.category }}</a></li>
+          {% endfor %}
+
+      </ul>
+      <ul class="nav navbar-nav navbar-right navbar-sm">
+        <li><input type="text" class="search-input" placeholder="歌名 / 歌手"></li>
+        <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+          {% if request.session.active %}
+        <li><a href="/person/">{{ request.session.active }}</a></li>
+          {% else %}
+          <li><a href="/login/">注册 / 登录</a></li>
+          {% endif %}
+      </ul>
+    </nav>
+  </div>
+</header>

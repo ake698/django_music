@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <title>{{ cate.category }} - 静听网 </title>
+  <link rel="stylesheet" href="/static/css/reset.css">
+  <link rel="stylesheet" href="/static/css/common.css">
+  <link rel="stylesheet" href="/static/css/category.css">
+  <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+</head>
+<body>
+<header>
+  <div class="container">
+    <div class="navbar-header">
+      <a href="" class="navbar-brand">
+        <img src="/static/images/logo.png" alt="">
+      </a>
+    </div>
+    <nav>
+      <ul class="nav navbar-nav navbar-link">
+        <li><a href="/index">首页</a></li>
+        {% for i in cates %}
+                <li
+                    {% if i.id == id %}
+                        class="active"
+                        {% endif %}
+                ><a href="/category/{{ i.id }}">{{ i.category }}</a></li>
+          {% endfor %}
+      </ul>
+      <ul class="nav navbar-nav navbar-right navbar-sm">
+        {% include 'module/search.html' %}
+          {% if request.session.active %}
+        <li><a href="/person/">{{ request.session.active }}</a></li>
+          {% else %}
+          <li>
+
+              <a href="/login/">注册 / 登录</a></li>
+          {% endif %}
+      </ul>
+    </nav>
+  </div>
+</header>
+<div class="container-sm category-header-wrap">
+  <div class="category-header-banner">
+    <div class="img"
+         style="background-image: url('/media/{{cate.img}}')">
+      <div class="content">
+        <h2>{{cate.category}}</h2>
+        <p>静听音乐</p>
+      </div>
+      <div class="mask"></div>
+    </div>
+  </div>
+</div>
+<div class="container-sm box">
+  <div class="main">
+    <div class="main-wrap">
+      <div class="content-box">
+        <div class="piano-list">
+          <div class="content-header">
+            <h2><i class="fa fa-music red"></i>{{cate.category}}音乐</h2>
+          </div>
+          <ul class="music-list clearfix">
+              {% for i in cate.song_set.all %}
+            <li>
+              <div class="u-cover">
+                <img src="/media/{{ i.img }}">
+                <a title="{{ i.title }}" href="/player/{{ i.id }}/" class="msk"></a>
+              </div>
+              <p class="dec">
+                <a title="{{ i.title }}" href="/player/{{ i.id }}/">{{ i.title }}</a>
+              </p>
+              <div class="author">{{i.author}}</div>
+            </li>
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<footer style="text-align: center">
+  <div class="container">
+    <div class="copyright">
+      <p>Copyright © <span class="update-year">2016</span> HaPBoy - All Rights Reserved</p>
+    </div>
+  </div>
+</footer>
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/common.js"></script>
+</body>
+</html>

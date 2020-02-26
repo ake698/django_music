@@ -1,0 +1,130 @@
+.u-title-1{
+    height: 33px;
+}
+.u-title{
+    height: 40px;
+    border-bottom: 2px solid #c20c0c;
+}
+
+.u-title-1 h3 {
+    font-size: 20px;
+    line-height: 28px;
+
+}
+.u-title h3 {
+    float: left;
+    font-size: 24px;
+    font-weight: normal;
+}
+
+.u-title-1 .sub {
+    margin: 9px 0 0 20px;
+    float: left;
+}
+
+.f-ff2 {
+    font-family: "Microsoft Yahei", Arial, Helvetica, sans-serif;
+    color: black;
+}
+
+.s-fc3, a.s-fc3:hover {
+    color: #666;
+}
+
+
+
+.m-cmmt .head, .m-cmmt .head img {
+    float: left;
+    width: 50px;
+    height: 50px;
+    margin-right: -30px;
+    position: absolute;
+}
+
+
+.m-cmmt .iptarea .m-cmmtipt {
+    margin-left: 62px;
+}
+
+.f-pr {
+    position: relative;
+    zoom: 1;
+}
+.j-flag{
+    margin-top: 10px;
+}
+
+.m-cmmtipt .area {
+    height: 50px;
+    width: 100%;
+    margin-right: -20px;
+    display: block;
+}
+
+.m-cmmtipt .btns {
+    clear: both;
+    padding-top: 10px;
+}
+
+.m-cmmtipt .btns .btn {
+    float: right;
+}
+
+.u-btn-1 {
+    width: 46px;
+    height: 25px;
+    background-position: -84px -64px;
+    color: black;
+    text-align: center;
+
+    padding: 0 11px;
+    background: #02bafa;
+    border: 1px #26bbdb solid;
+    border-radius: 3px;
+    /*color: #fff;*/
+    display: inline-block;
+    text-decoration: none;
+    font-size: 18px;
+    outline: none;
+}
+
+.u-hd4 {
+    position: relative;
+    top: 20px;
+    height: 20px;
+    border-bottom: 1px solid #cfcfcf;
+}
+
+.m-cmmt .cmmts .itm {
+    padding: 15px 0;
+    border-top: 1px dotted #ccc;
+}
+
+.m-cmmt .cmmts .cntwrap {
+    margin-left: 60px;
+}
+.m-cmmt .cmmts .cnt {
+    width: 100%;
+    overflow: hidden;
+    line-height: 20px;
+}
+.s-fc7, a.s-fc7:hover {
+    color: #0c73c2;
+}
+
+.m-cmmt .cmmts .que {
+    padding: 8px 19px;
+    margin-top: 10px;
+    line-height: 20px;
+    background: #f4f4f4;
+    border: 1px solid #dedede;
+}
+
+.m-cmmt .cmmts .time {
+    float: left;
+    margin: 0 !important;
+}
+
+.action{
+    float: right;
+}
