@@ -32,10 +32,11 @@
         {% include 'module/search.html' %}
                   {% if request.session.active %}
         <li class="active"><a  href="/person/">{{ request.session.active }}</a></li>
+                      <li><a href="/logout/">注销</a></li>
           {% else %}
           <li>
-
               <a href="/login/">注册 / 登录</a></li>
+
           {% endif %}
       </ul>
     </nav>
@@ -95,141 +96,29 @@
             <h2><i class="fa fa-music red"></i>收藏评论</h2>
           </div>
          <!--list-->
-            <div class="row">
-            <div style="width: 40%" class="category-music-list">
+            <div class="row" style="margin-bottom: 20%">
+            <div style="width: 95%" class="category-music-list">
               <div class="category-header">
                 收藏的评论
               </div>
               <ul>
+                  {% for i in comments %}
                 <li class="music-list-item">
                   <div class="title">
                     <div class="title_wrap">
-                      <span class="rank">1</span>
-                      <a href="./music/22712173.html" title="Refrain">Refrain</a>
+                      <span class="rank">{{ forloop.counter }}</span>
+                      <a href="/player/{{ i.song_id }}/" title="Refrain">《{{ i.song.title }}》&ensp;{{i.comment}} </a>
                     </div>
                   </div>
                   <div class="info">
-                    <span class="date">12-26</span>
-                    <span class="avatar"><img src="./storage/avatar/18.jpg"></span>
+                    <span class="date">{{ i.comment.user.nickname }}</span>
+                    <span class="avatar"></span>
                   </div>
                 </li>
-                <li class="music-list-item">
-                  <div class="title">
-                    <div class="title_wrap">
-                      <span class="rank">2</span>
-                      <a href="./music/586299.html" title="風の住む街">風の住む街</a>
-                    </div>
-                  </div>
-                  <div class="info">
-                    <span class="date">12-20</span>
-                    <span class="avatar"><img src="./storage/avatar/10.jpg"></span>
-                  </div>
-                </li>
-                <li class="music-list-item">
-                  <div class="title">
-                    <div class="title_wrap">
-                      <span class="rank">3</span>
-                      <a href="./music/357126.html" title="Tassel">Tassel</a>
-                    </div>
-                  </div>
-                  <div class="info">
-                    <span class="date">12-25</span>
-                    <span class="avatar"><img src="./storage/avatar/25.jpg"></span>
-                  </div>
-                </li>
-                <li class="music-list-item">
-                  <div class="title">
-                    <div class="title_wrap">
-                      <span class="rank">4</span>
-                      <a href="./music/139730.html" title="安静的午后">安静的午后</a>
-                    </div>
-                  </div>
-                  <div class="info">
-                    <span class="date">11-17</span>
-                    <span class="avatar"><img src="./storage/avatar/5.jpg"></span>
-                  </div>
-                </li>
-                <li class="music-list-item">
-                  <div class="title">
-                    <div class="title_wrap">
-                      <span class="rank">5</span>
-                      <a href="./music/139774.html" title="The truth that you leave">The truth that you leave</a>
-                    </div>
-                  </div>
-                  <div class="info">
-                    <span class="date">12-13</span>
-                    <span class="avatar"><img src="./storage/avatar/24.jpg"></span>
-                  </div>
-                </li>
+                  {% endfor %}
               </ul>
             </div>
-            <div style="width: 40%;margin-left: 5%" class="category-music-list">
-              <div class="category-header">
-                我的评论
-              </div>
-              <ul>
-                <li class="music-list-item">
-                  <div class="title">
-                    <div class="title_wrap">
-                      <span class="rank">1</span>
-                      <a href="./music/22712173.html" title="Refrain">Refrain</a>
-                    </div>
-                  </div>
-                  <div class="info">
-                    <span class="date">12-26</span>
-                    <span class="avatar"><img src="./storage/avatar/18.jpg"></span>
-                  </div>
-                </li>
-                <li class="music-list-item">
-                  <div class="title">
-                    <div class="title_wrap">
-                      <span class="rank">2</span>
-                      <a href="./music/586299.html" title="風の住む街">風の住む街</a>
-                    </div>
-                  </div>
-                  <div class="info">
-                    <span class="date">12-20</span>
-                    <span class="avatar"><img src="./storage/avatar/10.jpg"></span>
-                  </div>
-                </li>
-                <li class="music-list-item">
-                  <div class="title">
-                    <div class="title_wrap">
-                      <span class="rank">3</span>
-                      <a href="./music/357126.html" title="Tassel">Tassel</a>
-                    </div>
-                  </div>
-                  <div class="info">
-                    <span class="date">12-25</span>
-                    <span class="avatar"><img src="./storage/avatar/25.jpg"></span>
-                  </div>
-                </li>
-                <li class="music-list-item">
-                  <div class="title">
-                    <div class="title_wrap">
-                      <span class="rank">4</span>
-                      <a href="./music/139730.html" title="安静的午后">安静的午后</a>
-                    </div>
-                  </div>
-                  <div class="info">
-                    <span class="date">11-17</span>
-                    <span class="avatar"><img src="./storage/avatar/5.jpg"></span>
-                  </div>
-                </li>
-                <li class="music-list-item">
-                  <div class="title">
-                    <div class="title_wrap">
-                      <span class="rank">5</span>
-                      <a href="./music/139774.html" title="The truth that you leave">The truth that you leave</a>
-                    </div>
-                  </div>
-                  <div class="info">
-                    <span class="date">12-13</span>
-                    <span class="avatar"><img src="./storage/avatar/24.jpg"></span>
-                  </div>
-                </li>
-              </ul>
-            </div>
+
             </div>
         </div>
       </div>

@@ -128,3 +128,8 @@
 .action{
     float: right;
 }
+
+.none{
+    display: none;
+    /*visibility: hidden;*/
+}

@@ -12,7 +12,34 @@
   <link rel="stylesheet" href="/static/css/comments.css">
 </head>
 <body>
-{% include 'header.html' %}
+<header>
+  <div class="container">
+    <div class="navbar-header">
+      <a href="" class="navbar-brand">
+        <img src="/static/images/logo.png" alt="">
+      </a>
+    </div>
+    <nav>
+      <ul class="nav navbar-nav navbar-link">
+      <li><a href="/index">首页</a></li>
+          {% for i in cates %}
+                <li><a href="/category/{{ i.id }}">{{ i.category }}</a></li>
+          {% endfor %}
+
+      </ul>
+      <ul class="nav navbar-nav navbar-right navbar-sm">
+        <li><input type="text" class="search-input" placeholder="歌名 / 歌手"></li>
+        <li><a href="#"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+          {% if request.session.active %}
+        <li><a href="/person/">{{ request.session.active }}</a></li>
+              <li><a href="/logout/">注销</a></li>
+          {% else %}
+          <li><a href="/login/">注册 / 登录</a></li>
+          {% endif %}
+      </ul>
+    </nav>
+  </div>
+</header>
 <div class="container-sm player-wrap">
   <div id="music-player" class="aplayer"></div>
 </div>
@@ -55,69 +82,75 @@
             <!---comments-->
             <div class="n-cmt" id="comment-box" data-tid="R_SO_4_482988618" data-count="0"><div id="auto-id-nCTMftNpfkDXppq7">
                 <div class="u-title u-title-1">
-                <h3><span class="f-ff2">评论</span></h3><span class="sub s-fc3">共<span class="j-flag">563</span>条评论</span>
+                <h3><span class="f-ff2">评论</span></h3><span class="sub s-fc3">共<span class="j-flag">{{comments.count}}</span>条评论</span>
                 </div>
                 <div class="m-cmmt">
                 <div class="iptarea">
                 <div class="head">
-                    <img src="http://p4.music.126.net/pQ1RnmXMyXQ-4k9V1zzJpg==/18713687906524684.jpg?param=50y50"></div>
+                    <img src="/media/{{ user.img }}"></div>
                 <div class="j-flag">
                     <div>
                         <div class="m-cmmtipt f-cb f-pr">
                             <div class="u-txtwrap holder-parent f-pr" style="display: block;">
-                                <textarea style="height: 110px" class="u-txt area j-flag" data-type="0" placeholder="评论" id="auto-id-O7fvDTxcZeJHW4WE"></textarea></div>
+                                <textarea style="height: 110px" class="u-txt area j-flag" data-type="0" placeholder="评论" id="comment_text"></textarea></div>
                     <div class="btns f-cb f-pr">
                         <i class="icn u-icn u-icn-36 j-flag" id="auto-id-pw93pDKhR43MDPCF"></i>
                         <i class="icn u-icn u-icn-41 j-flag" id="auto-id-K9hsDCGDIztEMLIW"></i>
-                        <a href="javascript:void(0)" class="btn u-btn u-btn-1 j-flag" id="auto-id-luCbX8PiFVJ9uIfk">评论</a>
+                        <a href="javascript:void(0)" class="btn u-btn u-btn-1 j-flag" id="comment_btn" >评论</a>
                     </div>
                 </div>
                 </div></div>
                 </div>
-                <div class="cmmts j-flag" id="auto-id-dsPqEWynz3cFChWS">
-                    <h3 class="u-hd4">精彩评论</h3>
+                <div class="cmmts j-flag" id="comments">
+                    <br><br>
                     <br>
-
-                    <div id="31702909981582518015504" class="itm" data-id="3170290998">
+                    {% for i in comments %}
+                    <div id="31702909981582518015504" class="itm"  style="margin-bottom: 5%">
                         <div class="head">
-                        <a href="/user/home?id=2132649468">
-                            <img src="https://p2.music.126.net/oeAdaqTqdYzBXEMKXBVuMw==/109951164665096093.jpg?param=50y50"></a>
+                        <a href="#">
+                            <img src="/media/{{i.user.img}}"></a>
                     </div>
                         <div class="cntwrap">
                             <div class="">
                                 <!--自身内容-->
-                                <div class="cnt f-brk"><a href="/user/home?id=2132649468" class="s-fc7">小李没烦恼ovo</a>
-                                    ：lre20岁一定会学建筑的</div></div>
+                                <div class="cnt f-brk"><a href="/user/home?id=2132649468" class="s-fc7">{{i.user.nickname}}</a>
+                                    ：{{i.content}}</div></div>
                             <!--原评论-->
+                        {% if  i.to_content != None %}
                             <div class="que f-brk f-pr s-fc3">
                                 <span class="darr">
                                 </span>
-                                <a class="s-fc7" href="/user/home?id=122377914">Jean菲菲<sup class="icn u-icn2 u-icn2-music2"></sup></a>
-                                ：20多岁，没脸提懵懂的无知，也没力去夸下海口吹牛逼。
+                                <a class="s-fc7" href="/user/home?id=122377914">{{i.to_user.nickname}}<sup class="icn u-icn2 u-icn2-music2"></sup></a>
+                                ：{{i.to_content}}
+
                             </div>
+                        {% else %}
+                            <br>
+                        {% endif %}
                             <div class="rp">
-                            <div class="time s-fc4">刚刚</div>
+                            <div class="time s-fc4" style="font-size: 15px;color: #4c4c39">{{i.createTime}}</div>
                                 <div class="action">
-                                    <a href="javascript:void(0)" class="s-fc3" data-type="reply">收藏</a>
+                                    <a href="javascript:void(0)" class="s-fc3 likeComment" id="likecomment{{ i.id }}" data-id="{{ i.id }}" data-status="like">收藏</a>
                                     <span class="sep">|</span>
-                                    <a href="javascript:void(0)" class="s-fc3" data-id="3170290998" data-type="reply">回复</a>
+                                    <a href="javascript:void(0)" class="s-fc3" onclick="disPlay({{ i.id }})">回复</a>
                                 </div>
 
                             </div>
                         </div>
                     </div>
                     <!--回复评论-->
-                    <div class="rept m-quk m-quk-1 f-pr" id="reply">
+                    <div class="rept m-quk m-quk-1 f-pr none replyTar" id="reply{{ i.id }}">
                         <div class="m-cmmtipt f-cb f-pr" style="margin-left: 10%;height:150px">
                             <div class="u-txtwrap holder-parent f-pr" style="display: block;">
-                                <textarea style="height: 60px" class="u-txt area j-flag" data-type="0" placeholder="评论" id="auto-id-O7fvDTxcZeJHW4WE"></textarea></div>
+                                <textarea style="height: 60px" class="u-txt area j-flag" data-type="0" placeholder="回复" id="replyContent{{ i.id }}"></textarea></div>
                     <div class="btns f-cb f-pr">
                         <i class="icn u-icn u-icn-36 j-flag" id="auto-id-pw93pDKhR43MDPCF"></i>
                         <i class="icn u-icn u-icn-41 j-flag" id="auto-id-K9hsDCGDIztEMLIW"></i>
-                        <a href="javascript:void(0)" class="btn u-btn u-btn-1 j-flag" id="auto-id-luCbX8PiFVJ9uIfk">评论</a>
+                        <a href="javascript:void(0)" class="btn u-btn u-btn-1 j-flag" onclick="replaComment({{ i.id }},{{ i.user.id }})">回复</a>
                     </div>
                 </div>
                     </div>
+                    {% endfor %}
                 </div>
 
 
@@ -159,25 +192,52 @@
       url: '/media/{{song.file}}',  // Required, music url
       pic: '/media/{{song.img}}'  // Optional, music picture
 
-        //http://music.163.com/song/media/outer/url?id=歌曲id.mp3
+        //http://music.163.com/song/media/outer/url?id=30394891
     }
   });
 
-$.ajax({
-    url:"/like/?id={{ song.id }}",
-    type:"get",
-    success:function (data) {
-        if(data.code == "200"){
-            if(Number(data.data) > 0){
-                console.log("xihuan");
-                $(".like").addClass("cs")
-            }
-        }
-
-        console.log("unlike")
-    }
+$(document).ready(function () {
+    songStatus();
+    commentsStatus();
 });
 
+function songStatus() {
+    $.ajax({
+        url:"/like/?id={{ song.id }}",
+        type:"get",
+        success:function (data) {
+            if(data.code == "200"){
+                if(Number(data.data) > 0){
+                    console.log("like");
+                    $(".like").addClass("cs");
+                }
+            }
+        }
+    });
+}
+
+function commentsStatus(){
+    $.ajax({
+        url:"/commentlike/?id={{ song.id }}",
+        type:"get",
+        success:function (data) {
+            data = data.data;
+            for(var i in data){
+                $("#likecomment"+data[i]).text("已收藏");
+                $("#likecomment"+data[i]).attr("data-status","unlike");
+            }
+        }
+    })
+}
+
+
+function resetContent() {
+    $(".u-txt").val("");
+    $('html').animate(
+    { scrollTop: '0px' }, 1000
+    );
+}
+var id = {{ song.id }}
 $(".like").click(function () {
     var flag = $(this).hasClass('cs');
     if(flag){
@@ -191,7 +251,7 @@ $(".like").click(function () {
 });
 
 function likeSong(flag){
-    var id = {{ song.id }}
+
     $.ajax({
         url:"/like/",
         type:"post",
@@ -199,6 +259,71 @@ function likeSong(flag){
     })
 }
 
+$("#comment_btn").click(function () {
+    var comment_text = $("#comment_text").val();
+    console.log(comment_text);
+    $.ajax({
+        url:"/comment/",
+        type:"post",
+        data:{id:id,content:comment_text},
+        success:function (data) {
+            alert("回复成功！");
+            resetContent();
+        }
+    })
+});
+
+function disPlay(id) {
+    disPlayAll();
+    $("#reply"+id).toggleClass("none");
+}
+
+function disPlayAll() {
+    $(".replyTar").addClass("none")
+}
+
+
+
+function replaComment(id) {
+    replyContent = $("#replyContent"+id).val();
+    resetContent();//清空其他评论
+    console.log(replyContent);
+    $.ajax({
+        url:"/replay/",
+        type:"post",
+        data:{"commentId":id,"content":replyContent},
+        success:function (data) {
+            if(data.code == "200"){
+                alert("回复成功！")
+            }else{
+                alert(data.msg)
+            }
+            resetContent()
+        }
+    })
+}
+
+$(".likeComment").click(function () {
+    commentId = $(this).attr("data-id");
+    status = $(this).attr("data-status");
+    that = this;
+    $.ajax({
+        url:"/commentlike/",
+        type:"post",
+        data:{"songId":id,"commentId":commentId,"flag":status},
+        success:function (data) {
+            if(status == "like"){
+                $(that).text("已收藏");
+                $(that).attr("data-status","unlike");
+            }else{
+                $(that).text("收藏");
+                $(that).attr("data-status","like");
+            }
+
+            console.log(data);
+        }
+    })
+})
 
 </script>
 </body>

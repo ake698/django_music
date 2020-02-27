@@ -79,3 +79,18 @@ class Comment(models.Model):
     class Meta:
         verbose_name = "评论管理"
         verbose_name_plural = "评论管理"
+
+
+class CommentLike(models.Model):
+    id = models.AutoField(primary_key=True, verbose_name="ID")
+    user = models.ForeignKey(UserManager, on_delete=models.CASCADE,verbose_name="用户")
+    song = models.ForeignKey(Song, on_delete=models.CASCADE,verbose_name="歌曲")
+    comment = models.ForeignKey(Comment, on_delete=models.CASCADE,verbose_name="评论")
+    createTime = models.DateTimeField(auto_now=True, verbose_name="收藏时间")
+
+    def __str__(self):
+        return str(self.id)
+
+    class Meta:
+        verbose_name = "评论收藏管理"
+        verbose_name_plural = "评论收藏管理"

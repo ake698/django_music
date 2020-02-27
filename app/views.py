@@ -43,7 +43,48 @@ def player(request,id):
         songs = Song.objects.filter(category=song.category).exclude(id=int(id))
         if len(songs) < 1:
             songs = Song.objects.all()[:5]
-    return render(request,'player.html',{"cates":cates,"song":song,"songs":songs})
+    #获取评论
+    comments = Comment.objects.filter(song__id=int(id))
+    user = getUser(request)
+    return render(request,'player.html',{"cates":cates,"song":song,"songs":songs,"comments":comments,"user":user})
+
+
+#评论收藏
+def commentsLike(request):
+    result = {
+        "code": "400",
+        "msg": "错误！",
+    }
+    user = getUser(request)
+    if request.method == "POST":
+        songId = request.POST['songId']
+        commentId = request.POST['commentId']
+        flag = request.POST['flag']
+
+        song = Song.objects.get(id=int(songId))
+        comment = Comment.objects.get(id=int(commentId))
+        if flag == "like":
+            #收藏评论
+            CommentLike.objects.create(song=song,comment=comment,user=user)
+        else:
+            #取消收藏
+            CommentLike.objects.filter(comment=comment).delete()
+        result['code'] = "200"
+        result['msg'] = "操作成功！"
+        return HttpResponse(json.dumps(result), content_type="application/json")
+    try:
+        id = request.GET['id']
+    except:
+        return HttpResponse(json.dumps(result), content_type="application/json")
+
+    likes = CommentLike.objects.filter(user=user,song__id=int(id))
+    likelist = []
+    for i in likes:
+        likelist.append(i.comment.id)
+    result['data'] = likelist
+    result['code'] = "200"
+    result['msg'] = "成功！"
+    return HttpResponse(json.dumps(result), content_type="application/json")
 
 
 #歌曲收藏
@@ -81,6 +122,7 @@ def like(request):
     return HttpResponse(json.dumps(result), content_type="application/json")
 
 
+#发表评论
 def comment(request):
     result = {
         "code": "400",
@@ -92,17 +134,49 @@ def comment(request):
         user = getUser(request)
         song = Song.objects.get(id=int(id))
         #创建评论
-        Comment.objects.create(song=song,user=request,content=content)
+        Comment.objects.create(song=song,user=user,content=content)
         result['code'] = "200"
         result['msg'] = "操作成功！"
+        song.comments += 1
+        song.save()
     return HttpResponse(json.dumps(result), content_type="application/json")
+
+
+#回复评论
+def replyComment(request):
+    result = {
+        "code": "400",
+        "msg": "错误！",
+    }
+    if request.method == "POST":
+        content = request.POST['content']     #评论内容
+        commentId = request.POST['commentId'] #原评论id
+
+        user = getUser(request)
+        comment = Comment.objects.get(id=int(commentId))
+        song = comment.song                    #评论的歌曲
+        to_user = comment.user
+        to_conent = comment.content
+        if comment.user_id == user.id:
+            result['msg'] = "不能自己回复自己的评论！"
+            return HttpResponse(json.dumps(result), content_type="application/json")
+
+        # 创建评论
+        c = Comment.objects.create(song=song, user=user, content=content,to_user=to_user,to_content=to_conent)
+        result['code'] = "200"
+        result['msg'] = "操作成功！"
+        song.comments += 1
+        song.save()
+    return HttpResponse(json.dumps(result), content_type="application/json")
+
 
 #个人中心
 def person(request):
     cates = Category.objects.all()
     user = getUser(request)
     likes = Like.objects.filter(user=user)
-    return render(request,'person.html',{"cates":cates,"user":user,"likes":likes})
+    comments = CommentLike.objects.filter(user=user)
+    return render(request,'person.html',{"cates":cates,"user":user,"likes":likes,"comments":comments})
 
 
 #修改个人信息
