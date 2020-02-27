@@ -7,7 +7,7 @@ import json
 #拦截器 用于检测用户是否登录
 def check(func):
     def wra(req,*arg,**kwargs):
-        if not req.session.get('username'):
+        if not req.session.get('active'):
             return redirect("/login/")
         return func(req,*arg,**kwargs)
     return wra
@@ -29,7 +29,7 @@ def index(request):
     new_songs = songs.order_by("-createTime")
     return render(request,'index.html',{"cates":cates,"songs":songs,"comment_songs":comment_songs,"new_songs":new_songs})
 
-
+@check
 #播放页面
 def player(request,id):
     try:
@@ -48,7 +48,7 @@ def player(request,id):
     user = getUser(request)
     return render(request,'player.html',{"cates":cates,"song":song,"songs":songs,"comments":comments,"user":user})
 
-
+@check
 #评论收藏
 def commentsLike(request):
     result = {
@@ -86,7 +86,7 @@ def commentsLike(request):
     result['msg'] = "成功！"
     return HttpResponse(json.dumps(result), content_type="application/json")
 
-
+@check
 #歌曲收藏
 def like(request):
     result = {
@@ -121,7 +121,7 @@ def like(request):
     result['data'] = like
     return HttpResponse(json.dumps(result), content_type="application/json")
 
-
+@check
 #发表评论
 def comment(request):
     result = {
@@ -141,7 +141,7 @@ def comment(request):
         song.save()
     return HttpResponse(json.dumps(result), content_type="application/json")
 
-
+@check
 #回复评论
 def replyComment(request):
     result = {
@@ -169,7 +169,7 @@ def replyComment(request):
         song.save()
     return HttpResponse(json.dumps(result), content_type="application/json")
 
-
+@check
 #个人中心
 def person(request):
     cates = Category.objects.all()
@@ -178,7 +178,7 @@ def person(request):
     comments = CommentLike.objects.filter(user=user)
     return render(request,'person.html',{"cates":cates,"user":user,"likes":likes,"comments":comments})
 
-
+@check
 #修改个人信息
 def modify(request):
     user = getUser(request)
@@ -198,7 +198,7 @@ def modify(request):
     cates = Category.objects.all()
     return render(request,'modify.html',{"cates":cates,"user":user})
 
-
+@check
 #上传图片并返回图片链接
 def imgUpload(request):
     result = {
