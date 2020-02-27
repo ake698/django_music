@@ -33,6 +33,7 @@
         {% include 'module/search.html' %}
                   {% if request.session.active %}
         <li><a href="/person/">{{ request.session.active }}</a></li>
+                      <li><a href="/logout/">注销</a></li>
           {% else %}
           <li>
 
