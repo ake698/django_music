@@ -24,8 +24,9 @@ from Music.settings import MEDIA_ROOT
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('index/',v.index),
+    path('echart/',v.echart),
+    path('echart_data/',v.echart_data),
     re_path(r'^media/(?P<path>.*)$', serve, {"document_root": MEDIA_ROOT}),
-    # path('player/',v.player),
     path('search/',v.search),
     path('person/',v.person),
     path('modify/',v.modify),

@@ -1,4 +1,5 @@
 from django.db import models
+from random import randint
 # Create your models here.
 
 
@@ -38,8 +39,9 @@ class Song(models.Model):
     author = models.CharField(max_length=10,verbose_name="作者",default="佚名")
     img = models.ImageField(upload_to="imgs",verbose_name="歌曲图片",null=True,blank=True,default="imgs/default.jpg")
     file = models.FileField(upload_to="files",verbose_name="歌曲文件",default="files/default.mp3")
-    count = models.IntegerField(default=0,verbose_name="评论数量")
-    comments = models.IntegerField(default=0,verbose_name="收藏数量")
+    count = models.IntegerField(default=0,verbose_name="喜欢数量")
+    comments = models.IntegerField(default=0,verbose_name="评论数量")
+    broadcast = models.IntegerField(default=randint(100,3000), verbose_name="播放数量")
     createTime = models.DateTimeField(auto_now=True, verbose_name="发布时间")
 
     def __str__(self):
